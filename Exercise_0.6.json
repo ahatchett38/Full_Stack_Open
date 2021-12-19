@@ -1,0 +1,41 @@
+Exercise 0.6: New Note (Single page app)
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server-->browser: HTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server-->browser: spa.js
+
+note over browser:
+browser starts executing js-code
+that requests JSON data from server 
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: {content: "testing on 19-12", date: "2021-12-19T09:23:43.568Z"}
+
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note
+browser->server: HTTP POST  https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over browser:
+Post request to server contains the new note as JSON data,which has the Content-Type header allowing
+the server to correctly parse the data
+end note
+
+server-->browser: Server responds with status code 201 (It will not ask for Redirects)
+
+note over browser:
+Since the server responded with status code 201, the browser stays on the same page and it sends
+no more HTTP requests, instead it uses Javascript code that it pulled from the server. This code 
+fetches the form-element from the page, and then registers an event handler to handle the
+form submit event.
+end note 
+
+note over browser
+Then the event handler creates a new note and adds it to the notes list with a command while
+rerendering the note list on the page. It then sends the new note to the server.
+end note
